@@ -9,6 +9,9 @@ Lightweight Node.js client to obtain a Bullhorn REST session (BhRestToken) effic
   - Access token shortcut: `accessToken` (+ `restUrl` or `credentials.username` to derive) to jump straight to REST login.
 - Returns `restUrl`, `restToken`, and when available `refreshToken`, `accessToken`, and `minRemaining`.
 
+#### Requirements
+- Node 18+ (uses the global `fetch`). If you need Node 16, bring your own fetch polyfill and wire it in.
+
 #### Install
 
 ```bash
@@ -50,6 +53,34 @@ await loginToBullhorn({
 await loginToBullhorn({
   tokens: { accessToken: '...', restUrl: 'https://rest...' }
 });
+```
+
+#### Usage with .env (recommended)
+
+Load a `.env` file and let the helpers read values from environment variables.
+
+```js
+// ESM
+import 'dotenv/config';
+import { loginToBullhorn, credentialsFromEnv, tokensFromEnv } from 'bullhorn-auth-client';
+
+const credentials = credentialsFromEnv() ?? undefined;
+const tokens = tokensFromEnv();
+
+const result = await loginToBullhorn({ credentials, tokens });
+```
+
+```js
+// CJS
+require('dotenv').config();
+const { loginToBullhorn, credentialsFromEnv, tokensFromEnv } = require('bullhorn-auth-client');
+
+(async () => {
+  const credentials = credentialsFromEnv() || undefined;
+  const tokens = tokensFromEnv();
+  const result = await loginToBullhorn({ credentials, tokens });
+  console.log(result);
+})();
 ```
 
 #### Usage (ESM)
@@ -99,6 +130,9 @@ declare function loginToBullhorn(
   params: { credentials?: BullhornCredentials; tokens?: TokenInput },
   config?: AuthConfig
 ): Promise<AuthResult>;
+
+declare function credentialsFromEnv(env?: NodeJS.ProcessEnv): BullhornCredentials | null;
+declare function tokensFromEnv(env?: NodeJS.ProcessEnv): Partial<TokenInput>;
 ```
 
 #### Flow details (non-interactive)
@@ -117,8 +151,19 @@ declare function loginToBullhorn(
 - Internal logging is sanitized (no credentials/tokens).
 
 #### Environment variables (optional)
-- `BULLHORN_TTL`: TTL in days for REST login (default 30)
-- `THRESHOLD_REMAINING_MIN`: minimum per-minute remaining to accept an existing token (default 100)
+- Credentials
+  - `BH_CLIENT_ID`
+  - `BH_CLIENT_SECRET`
+  - `BH_USERNAME`
+  - `BH_PASSWORD`
+- Tokens (optional)
+  - `BH_REST_URL`
+  - `BH_REST_TOKEN`
+  - `BH_REFRESH_TOKEN`
+  - `BH_ACCESS_TOKEN`
+- Behavior
+  - `BULLHORN_TTL`: TTL in days for REST login (default 30)
+  - `THRESHOLD_REMAINING_MIN`: minimum per-minute remaining to accept an existing token (default 100)
 
 #### License
 MIT

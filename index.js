@@ -16,7 +16,7 @@ async function doFetch(urlStr, init, httpOpts) {
   const controller = new AbortController();
   const id = setTimeout(() => controller.abort(), httpOpts.timeoutMs);
   try {
-    const headers = Object.assign({ "User-Agent": httpOpts.userAgent }, init?.headers || {});
+    const headers = init?.headers;
     const res = await fetch(urlStr, { ...init, headers, signal: controller.signal });
     return res;
   } finally {
@@ -135,9 +135,32 @@ async function ping(httpOpts, restUrl, restToken) {
 }
 
 function encodePasswordIfNeeded(password) {
-  // Original code URI-encodes if not already
   const encoded = encodeURIComponent(password);
-  return encoded === password ? password : password; // caller handles encoding on step1
+  return encoded === password ? password : password;
+}
+
+function credentialsFromEnv(env = process.env) {
+  const clientId = env.BH_CLIENT_ID;
+  const clientSecret = env.BH_CLIENT_SECRET;
+  const username = env.BH_USERNAME;
+  const password = env.BH_PASSWORD;
+  if (clientId && clientSecret && username && password) {
+    return { clientId, clientSecret, username, password };
+  }
+  return null;
+}
+
+function tokensFromEnv(env = process.env) {
+  const tokens = {
+    restUrl: env.BH_REST_URL,
+    restToken: env.BH_REST_TOKEN,
+    refreshToken: env.BH_REFRESH_TOKEN,
+    accessToken: env.BH_ACCESS_TOKEN
+  };
+  Object.keys(tokens).forEach((k) => {
+    if (tokens[k] === undefined) delete tokens[k];
+  });
+  return tokens;
 }
 
 /**
@@ -231,4 +254,4 @@ async function loginToBullhorn(params, config = {}) {
   };
 }
 
-module.exports = { loginToBullhorn };
+module.exports = { loginToBullhorn, credentialsFromEnv, tokensFromEnv };

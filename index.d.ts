@@ -39,3 +39,6 @@ export declare function loginToBullhorn(
   },
   config?: AuthConfig
 ): Promise<AuthResult>;
+
+export declare function credentialsFromEnv(env?: NodeJS.ProcessEnv): BullhornCredentials | null;
+export declare function tokensFromEnv(env?: NodeJS.ProcessEnv): Partial<TokenInput>;

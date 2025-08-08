@@ -29,16 +29,23 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/DanielPollock/bullhorn-auth.git",
-    "directory": "packages/bullhorn-auth-client"
+    "url": "git+https://github.com/DanielPollock/bullhorn-auth-client.git"
   },
   "bugs": {
-    "url": "https://github.com/DanielPollock/bullhorn-auth/issues"
+    "url": "https://github.com/DanielPollock/bullhorn-auth-client/issues"
   },
-  "homepage": "https://github.com/DanielPollock/bullhorn-auth#readme",
+  "homepage": "https://github.com/DanielPollock/bullhorn-auth-client#readme",
   "engines": {
-    "node": ">=16"
+    "node": ">=18"
   },
-  "dependencies": {}
+  "scripts": {
+    "lint": "eslint .",
+    "test": "jest"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^9.8.0",
+    "jest": "^29.7.0"
+  }
 
 }
