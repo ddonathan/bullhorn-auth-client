@@ -1,6 +1,6 @@
 {
   "name": "bullhorn-auth-client",
-  "version": "0.1.0",
+  "version": "1.0.1",
   "description": "Lightweight Bullhorn authentication client: ping, refresh, and full login to obtain BhRestToken and restUrl.",
   "main": "index.js",
   "types": "index.d.ts",
@@ -47,5 +47,4 @@
     "eslint": "^9.8.0",
     "jest": "^29.7.0"
   }
-
 }
