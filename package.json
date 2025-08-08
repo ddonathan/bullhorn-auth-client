@@ -1,0 +1,44 @@
+{
+  "name": "bullhorn-auth-client",
+  "version": "0.1.0",
+  "description": "Lightweight Bullhorn authentication client: ping, refresh, and full login to obtain BhRestToken and restUrl.",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./index.mjs",
+      "require": "./index.js",
+      "types": "./index.d.ts"
+    }
+  },
+  "files": [
+    "index.js",
+    "index.mjs",
+    "index.d.ts",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "license": "MIT",
+  "keywords": [
+    "bullhorn",
+    "auth",
+    "oauth2",
+    "rest",
+    "token"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DanielPollock/bullhorn-auth.git",
+    "directory": "packages/bullhorn-auth-client"
+  },
+  "bugs": {
+    "url": "https://github.com/DanielPollock/bullhorn-auth/issues"
+  },
+  "homepage": "https://github.com/DanielPollock/bullhorn-auth#readme",
+  "engines": {
+    "node": ">=16"
+  },
+  "dependencies": {}
+
+}
